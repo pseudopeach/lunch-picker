@@ -1,0 +1,2 @@
+module BallotOptionsHelper
+end

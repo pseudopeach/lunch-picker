@@ -1,0 +1,11 @@
+body{
+	background:#306030;
+}
+
+/* === layout ===*/
+#main{
+	width:760px;
+	margin:40px auto;
+	padding:20px;
+	background-color:rgba(255,255,255,.3);
+}
