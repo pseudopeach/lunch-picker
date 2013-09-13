@@ -1,11 +1,92 @@
-body{
-	background:#306030;
+/* CSS Document */
+
+body {
+	background: url(/acre-services/resourceImages/kiwi_bg.jpg) repeat;	
+}
+body, td {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:16px;
+	color:#4a474a;	
+}
+a {color:inherit}
+#main {
+	background:url('/acre-services/resourceImages/white_sq.png') no-repeat;
+	background-size:600px 100%;
+	width:450px;
+	padding:25px 75px;
+	margin:0px auto;
+}
+h1 {font-size:36px;}
+h2 {font-size:18px;}
+h3 {font-size:16px;}
+
+.inputCell{
+	padding-left:20px;	
+}
+.inputCell input, select, .formInput{
+	font-size:18px;
+	width:200px;
+}
+.message {
+	margin:20px auto;
+	text-align:center;
+	padding:20px;
+	background:rgba(255,255,255,.3);
+}
+.placeName{
+	padding:0px 30px;	
+}
+.error {
+	color:#8e4c21	
+}
+.actionLink{
+	padding-left:50px;
+	color:inherit;
+	font-size:12px;	
 }
 
-/* === layout ===*/
-#main{
-	width:760px;
-	margin:40px auto;
-	padding:20px;
-	background-color:rgba(255,255,255,.3);
+#suggestionBox {
+	position:absolute;
+	display:none;
+	background:#ffffff;
+	color:#202020;
+	size:12px;
+	width:200px;
+	border:#777 2px solid;
+	max-height:250px;
+	overflow:auto;
+}
+#suggestionBox ul{
+	padding:0px;
+	margin:0px;
+}
+#suggestionBox li{
+	list-style-type:none;
+	padding:3px;
+	display:block;
+}
+#suggestionBox a{
+	text-decoration:none;
+	color:inherit;
+	display:block;
+}
+#suggestionBox li:hover{
+	background-color:#e0e0e0;
+}
+.suggestionSelected{
+	background-color:#d0d0d0;
+}
+
+#admin_menu {
+	border:#AAA 1px solid;	
+	margin:0px 0px 20px;
+	overflow:auto;
+}
+
+#admin_menu .admin_menu_item{
+	padding:10px;
+	float:left;
+}
+.add_section{
+	margin:30px 0px;	
 }
