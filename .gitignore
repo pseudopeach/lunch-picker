@@ -1,4 +1,4 @@
-
+.DS*
 *.rbc
 *.sassc
 .sass-cache
