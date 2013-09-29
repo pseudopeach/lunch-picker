@@ -1,7 +1,7 @@
 /* CSS Document */
 
 body {
-	background: url(/acre-services/resourceImages/kiwi_bg.jpg) repeat;	
+	background: url('kiwi_bg.jpg') repeat;	
 }
 body, td {
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -10,7 +10,7 @@ body, td {
 }
 a {color:inherit}
 #main {
-	background:url('/acre-services/resourceImages/white_sq.png') no-repeat;
+	background:url('white_sq.png') no-repeat;
 	background-size:600px 100%;
 	width:450px;
 	padding:25px 75px;

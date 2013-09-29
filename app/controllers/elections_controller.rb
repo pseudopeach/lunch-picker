@@ -1,7 +1,7 @@
 class ElectionsController < ApplicationController
   respond_to :html, :json
-  before_filter :find_membership, :except=>[:new] #sets @current_member
-  before_filter :require_admin, :except=>[:show, :results, :new] #sets @current_member
+  before_filter :find_membership, :except=>[:new, :create] #sets @current_member
+  before_filter :require_admin, :except=>[:show, :results, :new, :create] #sets @current_member
   
   #GET /eletection
   def show
@@ -20,34 +20,38 @@ class ElectionsController < ApplicationController
   #form for creating a new voting group
   def new
     @group = LunchGroup.new
+    respond_to do |format|
+      format.html {render :new}
+      format.json{render :json=>{fuckyou:true} }
+    end
   end
   
   #POST /election
   #actually creates a new voting group
   def create 
     LunchGroup.transaction do
-      @group = LunchGroup.new(:name=>params[:name])
+      @group = LunchGroup.new(:name=>params[:lunch_group])
       @group.prefs = params[:prefs]
       if success = @group.save
-        @admin_user = GroupMember.new(:email=>prefs[:admin_email])
+        @admin_user = GroupMember.new(:email=>params[:admin_email])
         @group.add_admin @admin_user
       end
-    end
-    
-    if success
-      flash[:notice] = "New group was created!"
-      respond_to do |format|
-        format.html {redirect_to :show}
-        format.json{render :json=>{success:true} }
-      end
-    else
-      flash[:notice] = "Please fix the errors."
-      respond_to do |format|
-        format.html {render :new}
-        format.json{render :json=>{success:false, :errors=>@group.errors} }
-      end
-    end
-    
+ 
+      if success
+        flash[:notice] = "New group was created!"
+        respond_to do |format|
+          format.html {redirect_to controller: :group_members}
+          format.json{render :json=>{success:true} }
+        end
+      else
+        flash[:notice] = "Please fix the errors."
+        respond_to do |format|
+          format.html {render :new}
+          format.json{render :json=>{success:false, :errors=>@group.errors} }
+        end
+     end
+   end
+     
   end
   
   ##GET /election/[group_id]

@@ -1,6 +1,6 @@
 <h1>Create a new election group</h1>
 
-<%= form_for @group, :url=>election_path do |f|%>
+<%= form_for @group, url:{action: "create"} do |f|%>
 	<fieldset>
 		<legend>Basic Info</legend>
 		<label><h2>Group Name</h2>
@@ -18,7 +18,7 @@
 		</label>
 		<br/>
 		<label>Polls Close
-			<%= time_select "prefs[poll_close_utc]", @group.pref(:poll_close_utc) %>
+			<%= f.time_select :polls_close_utc %>
 		</label>
 		<br/>
 		<label>Enable Snap Election
@@ -29,7 +29,7 @@
 		<label>No Repeat Winners
 			<%= check_box_tag "prefs[retire_for_week]" %>
 		</label>
-		<caption>Winners are inelligable for the remainder of the same week.</caption>
+		<caption>Winners are ineligible for the remainder of the same week.</caption>
 		
 	</fieldset>
 	<%= submit_tag %>

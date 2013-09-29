@@ -4,7 +4,7 @@ LunchPicker::Application.routes.draw do
   end
   resources :ballot_options
   resources :history
-  resources :voter_regestry
+  resources :voter_registry
   resources :group_members
   
   resource :vote do

@@ -14,3 +14,11 @@ class ApplicationController < ActionController::Base
     return false
   end
 end
+
+def require_admin
+  unless @current_member.admin?
+    redirect_to :controller => :elections, :action=>:new
+    return false
+  end
+    return true
+end
