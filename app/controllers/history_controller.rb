@@ -41,7 +41,7 @@ class HistoryController < ApplicationController
     end
   end
   
-  #DELETE /history/[option_id]?date=[date]
+  #` /history/[option_id]?date=[date]
   def destroy
     #params[:id] is taken to be the ballot option id
     @group = @current_member.group

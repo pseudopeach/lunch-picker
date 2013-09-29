@@ -82,7 +82,7 @@ class LunchGroup < ActiveRecord::Base
     votes.where(["created_at > ?",polls_close_at-12.hours]).minimum(:created_at)
   end
   
-  def elligable_ballot_options
+  def eligible_ballot_options
     ballot_options
   end
   
@@ -101,13 +101,13 @@ class LunchGroup < ActiveRecord::Base
   def add_admin(admin)
     self.transaction do
       admin.is_admin = true
-      group.members << admin
+      members << admin
       #***todo send email
     end
   end
   
   def add_member(member)
-    group.members << admin
+    members << member
       #***todo send email
   end
   
