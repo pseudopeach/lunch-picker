@@ -30,8 +30,8 @@ class ElectionsController < ApplicationController
   #actually creates a new voting group
   def create 
     LunchGroup.transaction do
-      @group = LunchGroup.new(:name=>params[:lunch_group])
-      @group.prefs = params[:prefs]
+      @group = LunchGroup.new(params[:lunch_group])
+      @group.prefs = params[:prefs] || {}
       if success = @group.save
         @admin_user = GroupMember.new(:email=>params[:admin_email])
         @group.add_admin @admin_user
