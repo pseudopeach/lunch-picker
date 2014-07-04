@@ -15,8 +15,8 @@ class LunchGroup < ActiveRecord::Base
   
   def set_defaults
     @raw_prefs = {
-      lightning: true,
-      retire_for_week: true,
+      lightning: false,
+      retire_for_week: false,
     }
   end
   

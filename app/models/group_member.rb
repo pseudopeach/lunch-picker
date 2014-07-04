@@ -15,7 +15,7 @@ class GroupMember < ActiveRecord::Base
     return {success:false, errors:{election:"Polls are closed."}} unless lunch_group.polls_open?
     #return {success:false, errors:{election:"Member already voted."}} if cast_ballot_today?
     
-    option_ids = lunch_group.elligable_ballot_options.map{|q| q.id}
+    option_ids = lunch_group.eligible_ballot_options.map{|q| q.id}
     
     n=1
     self.transaction do

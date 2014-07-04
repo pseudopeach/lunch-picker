@@ -3,7 +3,7 @@ class ElectionsController < ApplicationController
   before_filter :find_membership, :except=>[:new, :create] #sets @current_member
   before_filter :require_admin, :except=>[:show, :results, :new, :create] #sets @current_member
   
-  #GET /eletection
+  #GET /election
   def show
     #main entry point of app, redirects user to whichever action is needed
     @group = @current_member.group

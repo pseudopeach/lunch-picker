@@ -11,8 +11,11 @@ body, td {
 a {color:inherit}
 #main {
 	background:url('white_sq.png') no-repeat;
+    height: 700px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;;
 	background-size:600px 100%;
-	width:450px;
+	width: 450px;
 	padding:25px 75px;
 	margin:0px auto;
 }
