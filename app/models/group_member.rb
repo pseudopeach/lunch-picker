@@ -3,7 +3,7 @@ class GroupMember < ActiveRecord::Base
   after_initialize :create_key, :if=>:needs_key?
   has_many :votes
   has_many :votes_today, :class_name => 'Vote'
-  belongs_to :lunch_group, :inverse_of => :members, :foreign_key=>"group_id"
+  belongs_to :group, :inverse_of => :members, class_name: "LunchGroup", :foreign_key=>"group_id"
   
   @@Choice_Limit = 3
   validates_presence_of :email

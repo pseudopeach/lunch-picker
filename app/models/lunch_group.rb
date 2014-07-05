@@ -3,7 +3,7 @@ class LunchGroup < ActiveRecord::Base
   after_initialize :set_defaults  
   after_initialize :decode_prefs
   
-  has_many :members, :class_name => "GroupMember", :foreign_key => "group_id", :inverse_of => :lunch_group
+  has_many :members, :class_name => "GroupMember", :foreign_key => "group_id", :inverse_of => :group
   has_many :votes, :inverse_of => :lunch_group
   #has_many :votes_today, ->(vote) { where starts_on: user.birthday }, class_name: 'Event'
   has_many :votes, :through=>:members
@@ -37,7 +37,7 @@ class LunchGroup < ActiveRecord::Base
   end
   
   def polls_close_at
-    #find nearest closting time on same day
+    #find nearest closing time on same day
     t = self.polls_close_utc
     return t + ((Time.now - t)/3600.0/24).round.days
   end
