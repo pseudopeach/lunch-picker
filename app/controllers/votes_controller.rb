@@ -7,7 +7,7 @@ class VotesController < ApplicationController
   def show
     #shows ballot form, or returns ballot options in json form
     @group = @current_member.group
-    @ballot_options = @group.elligable_ballot_options
+    @ballot_options = @group.eligible_ballot_options
     @current_vote = @current_member.cast_ballot_today? ? @current_member.last_ballot : nil
     respond_to do |format|
       format.html

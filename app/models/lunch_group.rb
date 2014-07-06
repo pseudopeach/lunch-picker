@@ -17,6 +17,7 @@ class LunchGroup < ActiveRecord::Base
     @raw_prefs = {
       lightning: false,
       retire_for_week: false,
+      daily_election: false
     }
   end
   
@@ -121,4 +122,10 @@ class LunchGroup < ActiveRecord::Base
       stry.each_pair {|k,v| @raw_prefs[k.to_sym] = v}
     end
   end
+
+  #vote by tag i.e. "Mexican" or "Quick Meal"
+  def is_tag_election?
+  end
+
+
 end
