@@ -1,8 +1,19 @@
 class LunchGroup < ActiveRecord::Base
-  before_save :encode_prefs
+
+  #prefs =======================
+  #synchronize text field in DB with ruby hash object named @raw_prefs
+
+  #creates new prefs hash on all new LunchGroup objects
   after_initialize :set_defaults  
+
+  #deserializes db column prefs_json into @raw_prefs attribute
   after_find :decode_prefs
-  
+
+  #serializes @raw_prefs attribute into db column prefs_json
+  before_save :encode_prefs
+  # ============================
+
+
   has_many :members, :class_name => "GroupMember", :foreign_key => "group_id", :inverse_of => :group
   has_many :votes, :inverse_of => :lunch_group
   #has_many :votes_today, ->(vote) { where starts_on: user.birthday }, class_name: 'Event'
@@ -115,11 +126,13 @@ class LunchGroup < ActiveRecord::Base
   def encode_prefs
     self.prefs_json = @raw_prefs.to_json
   end
-  
+
+  #trust what's in the DB, or set to default
   def decode_prefs
     if self.prefs_json
-      stry = JSON.parse(self.prefs_json) 
-      stry.each_pair {|k,v| @raw_prefs[k.to_sym] = v}
+      @raw_prefs = JSON.parse(self.prefs_json)
+    else
+      set_defaults
     end
   end
 

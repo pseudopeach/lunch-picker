@@ -63,7 +63,16 @@ class ElectionsController < ApplicationController
   #PUT /election/[group_id]
   def update
     #updates group options
-    @group = @current_member.group
+    @group = LunchGroup.find_by_id(params[:id])
+    #todo-extract this to a before_filter
+    if !@group
+      flash[:notice] = "Group not found!"
+      respond_to do |format|
+        format.html {redirect_to "/"}
+        format.json{render :json=>{success:false, errors:["group not found"]} }
+      end
+    end
+
     @group.assign_attributes params[:group]
     if @group.save
       flash[:notice] = "Changes were saved."
