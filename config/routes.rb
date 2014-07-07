@@ -1,7 +1,6 @@
 LunchPicker::Application.routes.draw do
-  resource :election do
-    get :results
-  end
+  resources :elections
+
   resources :ballot_options
   resources :history
   resources :voter_registry

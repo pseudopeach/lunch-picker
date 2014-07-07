@@ -30,8 +30,8 @@ class ElectionsController < ApplicationController
   #actually creates a new voting group
   def create 
     LunchGroup.transaction do
-      @group = LunchGroup.new(params[:lunch_group])
-      @group.prefs = params[:prefs] || {}
+      @group = LunchGroup.new
+      @group.assign_attributes(params[:group])
       if success = @group.save
         @admin_user = GroupMember.new(:email=>params[:admin_email])
         @group.add_admin @admin_user
@@ -41,7 +41,7 @@ class ElectionsController < ApplicationController
         flash[:notice] = "New group was created!"
         respond_to do |format|
           format.html {redirect_to controller: :group_members}
-          format.json{render :json=>{success:true} }
+          format.json{render :json=>{success:true, new_id:@group.id} }
         end
       else
         flash[:notice] = "Please fix the errors."
@@ -64,7 +64,7 @@ class ElectionsController < ApplicationController
   def update
     #updates group options
     @group = @current_member.group
-    @group.assign_attributes params
+    @group.assign_attributes params[:group]
     if @group.save
       flash[:notice] = "Changes were saved."
       respond_to do |format|

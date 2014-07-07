@@ -1,7 +1,7 @@
 class LunchGroup < ActiveRecord::Base
   before_save :encode_prefs
   after_initialize :set_defaults  
-  after_initialize :decode_prefs
+  after_find :decode_prefs
   
   has_many :members, :class_name => "GroupMember", :foreign_key => "group_id", :inverse_of => :group
   has_many :votes, :inverse_of => :lunch_group
@@ -11,7 +11,7 @@ class LunchGroup < ActiveRecord::Base
   has_many :win_history, :class_name => "LunchHistory", :inverse_of => :lunch_group
   has_and_belongs_to_many :ballot_options
   
-  attr_accessible :name, :polls_close_utc
+  attr_accessible :name, :polls_close_utc, :prefs
   
   def set_defaults
     @raw_prefs = {
