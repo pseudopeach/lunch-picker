@@ -3,7 +3,5 @@ class LunchHistory < ActiveRecord::Base
 
   belongs_to :ballot_option
   belongs_to :lunch_group, :inverse_of => :win_history
-  
-  
 
 end

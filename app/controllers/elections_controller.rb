@@ -60,7 +60,7 @@ class ElectionsController < ApplicationController
     @group = LunchGroup.find_by_id params[:id]
   end
   
-  #PUT /election/[group_id]
+  #PUT /elections/[group_id]
   def update
     #updates group options
     @group = LunchGroup.find_by_id(params[:id])
@@ -89,13 +89,25 @@ class ElectionsController < ApplicationController
     end
   end
   
-  #DELETE /election/[group_id]
+  #DELETE /elections/[group_id]
   def destroy
     #removes a group
-    @group = @current_member.group
-    @group.deactivate
-    session.delete :group_id
-    redirect_to :show
+    LunchGroup.transaction do
+      @group = LunchGroup.find_by_id(params[:id])
+        if success = @group.destroy
+          flash[:notice] = "Election group #{@group.id} has been deleted."
+          respond_to do |format|
+            format.html {redirect_to :show}
+            format.json{render :json=>{success:true} }
+          end
+        else
+          flash[:notice] = "Delete failed."
+          respond_to do |format|
+            format.html {render :delete}
+            format.json{render :json=>{success:false, :errors=>@group.errors} }
+          end
+        end
+    end
   end
   
   #GET /election/results
