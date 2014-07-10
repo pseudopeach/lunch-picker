@@ -18,7 +18,7 @@ class LunchGroup < ActiveRecord::Base
   #has_many :votes_today, ->(vote) { where starts_on: user.birthday }, class_name: 'Event'
   has_many :votes, :through=>:members
   has_many :votes_today, :class_name=>"Vote", :through=>:members
-  has_many :win_history, :class_name => "LunchHistory", :inverse_of => :lunch_group, :dependent => :destroy
+  has_many :win_history, :class_name => "LunchHistory", :inverse_of => :lunch_group
   has_and_belongs_to_many :ballot_options
   
   attr_accessible :name, :polls_close_utc, :prefs

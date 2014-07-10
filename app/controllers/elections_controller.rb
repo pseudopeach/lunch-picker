@@ -16,7 +16,7 @@ class ElectionsController < ApplicationController
     end
   end
   
-  #GET /election/new
+  #GET /elections/new
   #form for creating a new voting group
   def new
     @group = LunchGroup.new
@@ -26,7 +26,7 @@ class ElectionsController < ApplicationController
     end
   end
   
-  #POST /election
+  #POST /elections
   #actually creates a new voting group
   def create 
     LunchGroup.transaction do
@@ -92,22 +92,29 @@ class ElectionsController < ApplicationController
   #DELETE /elections/[group_id]
   def destroy
     #removes a group
-    LunchGroup.transaction do
       @group = LunchGroup.find_by_id(params[:id])
-        if success = @group.destroy
-          flash[:notice] = "Election group #{@group.id} has been deleted."
-          respond_to do |format|
-            format.html {redirect_to :show}
-            format.json{render :json=>{success:true} }
-          end
-        else
-          flash[:notice] = "Delete failed."
-          respond_to do |format|
-            format.html {render :delete}
-            format.json{render :json=>{success:false, :errors=>@group.errors} }
-          end
+      #todo-extract this to a before_filter (not working now)
+      if !@group
+        flash[:notice] = "Group not found!"
+        respond_to do |format|
+          format.html {redirect_to "/"}
+          format.json{render :json=>{success:false, errors:["group not found"]} }
         end
-    end
+      end
+
+      if @group.destroy
+        flash[:notice] = "Group # #{:id} has been deleted."
+        respond_to do |format|
+          format.html {redirect_to :show}
+          format.json{render :json=>{success:true} }
+        end
+      else
+        flash[:notice] = "Delete failed."
+        respond_to do |format|
+          format.html {render :delete}
+          format.json{render :json=>{success:false, :errors=>@group.errors} }
+        end
+      end
   end
   
   #GET /election/results
@@ -127,5 +134,5 @@ class ElectionsController < ApplicationController
       format.json{render :json=>{results:@results, turnout:@turnout} }
     end
   end
-  
+
 end
