@@ -4,7 +4,7 @@ class ElectionsController < ApplicationController
   before_filter :require_admin, :except=>[:show, :results, :new, :create] #sets @current_member
   
   #GET /election
-  def show
+  def election_landing
     #main entry point of app, redirects user to whichever action is needed
     @group = @current_member.group
     if @group.polls_open?
@@ -13,6 +13,19 @@ class ElectionsController < ApplicationController
     else
       #show last results
       redirect_to :action=>:results
+    end
+  end
+
+  #GET /elections/1234
+  def show
+    @group = LunchGroup.find_by_id params[:id]
+    respond_to do |format|
+      format.html {render :show}
+      format.json do
+        out = {}
+        [:polls_close_utc, :name].each {|col| out[col] = @group[col]}
+        render :json=> out
+      end
     end
   end
   
@@ -93,13 +106,18 @@ class ElectionsController < ApplicationController
   def destroy
     #removes a group
       @group = LunchGroup.find_by_id(params[:id])
-      #todo-extract this to a before_filter (not working now)
       if !@group
         flash[:notice] = "Group not found!"
+        logger.debug "group not found for delete"
         respond_to do |format|
-          format.html {redirect_to "/"}
+          format.html do
+            logger.debug "rendering as HTML!!!!"
+            redirect_to "/"
+          end
           format.json{render :json=>{success:false, errors:["group not found"]} }
         end
+
+        return
       end
 
       if @group.destroy
