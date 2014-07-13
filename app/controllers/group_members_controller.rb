@@ -16,6 +16,7 @@ class GroupMembersController < ApplicationController
     @member = GroupMember.new(params[:member])
     if @current_member.group.add_member @member
       render :json=>{success:true, new_id:@member.id}
+      UserMailer.invite_email(@member.email).deliver
     else
       render :json=>{success:false, errors:@member.errors}
     end
