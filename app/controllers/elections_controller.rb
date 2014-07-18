@@ -16,6 +16,11 @@ class ElectionsController < ApplicationController
     end
   end
 
+  #GET /elections/index
+  def index
+    @groups = LunchGroup.order(:id)
+  end
+
   #GET /elections/1234
   def show
     @group = LunchGroup.find_by_id params[:id]
