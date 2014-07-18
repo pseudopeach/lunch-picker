@@ -1,0 +1,17 @@
+<h1>Lunch Groups</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Polls Close</th>
+  </tr>
+  <% @groups.each do |group| %>
+  <tr>
+    <td><%= group.name %></td>
+    <td><%=group.polls_close_utc %></td>
+    <td class="actions">
+      <%= link_to("Detail",{:action => 'show', :id => group.id}, :class=>'action show') %>
+    </td>
+  </tr>
+      <%end%>
+</table>
