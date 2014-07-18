@@ -14,7 +14,7 @@
 	<fieldset>
 		<legend>Election Rules</legend>
 		<label>Daily Election
-			<%= check_box_tag :is_daily, 'true' %>
+			<%= check_box_tag :is_daily, "true", {:checked => 'checked'} %>
 		</label>
 		<br/>
 		<label>Polls Close
@@ -22,12 +22,12 @@
 		</label>
 		<br/>
 		<label>Enable Snap Election
-			<%= check_box_tag "prefs[lightning]", 'true'||@group.pref(:lightning) %>
+			<%= check_box "prefs[lightning]", 'true'||@group.pref(:lightning), {:checked => 'checked'} %>
 		</label>
 		<caption>Allows 10 minutes of voting after poll close if no member voted in time.</caption>
 		<br/>
 		<label>No Repeat Winners
-			<%= check_box_tag "prefs[retire_for_week]", 'true' %>
+			<%= check_box "prefs[retire_for_week]", 'true', {:checked => 'checked'} %>
 		</label>
 		<caption>Winners are ineligible for the remainder of the same week.</caption>
 		
