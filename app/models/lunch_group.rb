@@ -121,6 +121,12 @@ class LunchGroup < ActiveRecord::Base
     members << member
       #***todo send email
   end
+
+  def add_members(input)
+    emails.each |email|
+    members << members.email
+  end
+
   
   def encode_prefs
     self.prefs_json = @raw_prefs.to_json

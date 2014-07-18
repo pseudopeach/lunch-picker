@@ -11,16 +11,18 @@ class GroupMembersController < ApplicationController
       format.json {render :json=>{members:@members} }
     end
   end
-  
+
+  #member[email] adds single new member
+  #emails[] adds multiple new members
   def create
-    @member = GroupMember.new(params[:member])
-    if @current_member.group.add_member @member
-      render :json=>{success:true, new_id:@member.id}
-      UserMailer.invite_email(@member.email).deliver
-    else
-      render :json=>{success:false, errors:@member.errors}
+      @member = GroupMember.new(params[:member])
+      if @current_member.group.add_member @member
+        render :json=>{success:true, new_id:@member.id}
+        UserMailer.invite_email(@member.email).deliver
+      else
+        render :json=>{success:false, errors:@member.errors}
+      end
     end
-  end
   
   def destroy
     @member = @current_member.group.members.where(:removed=>false, :id=>params[:id]).first

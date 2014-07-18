@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19c4d9d7-ef7f-471a-a753-8e1bde7df1f7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/group_members_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/group_members_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/lunch_group.rb" afterPath="$PROJECT_DIR$/app/models/lunch_group.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="lunch-picker.iws" />
     <ignored path=".idea/workspace.xml" />
