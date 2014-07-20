@@ -1,9 +1,11 @@
-class LunchGroup < ActiveRecord::Base
+class Group < ActiveRecord::Base
+
+  self.table_name = "lunch_groups"
 
   #prefs =======================
   #synchronize text field in DB with ruby hash object named @raw_prefs
 
-  #creates new prefs hash on all new LunchGroup objects
+  #creates new prefs hash on all new Group objects
   after_initialize :set_defaults  
 
   #deserializes db column prefs_json into @raw_prefs attribute
@@ -18,16 +20,16 @@ class LunchGroup < ActiveRecord::Base
   #has_many :votes_today, ->(vote) { where starts_on: user.birthday }, class_name: 'Event'
   has_many :votes, :through=>:members
   has_many :votes_today, :class_name=>"Vote", :through=>:members
-  has_many :win_history, :class_name => "LunchHistory", :inverse_of => :lunch_group
+  has_many :win_history, :class_name => "LunchHistory", :inverse_of => :group
   has_and_belongs_to_many :ballot_options
   
   attr_accessible :name, :polls_close_utc, :prefs
   
   def set_defaults
     @raw_prefs = {
-      lightning: false,
-      retire_for_week: false,
-      daily_election: false
+      lightning: true,
+      retire_for_week: true,
+      daily_election: true
     }
   end
   
@@ -43,7 +45,7 @@ class LunchGroup < ActiveRecord::Base
       return true if close.past? && (!first || (first+10.minutes).future?)
     end
     
-    return close.future? && (close-LunchGroup.poll_length).past?
+    return close.future? && (close-Group.poll_length).past?
     #***todo Implement lightning round
   end
   

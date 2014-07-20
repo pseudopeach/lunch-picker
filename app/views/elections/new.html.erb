@@ -1,10 +1,10 @@
 <h1>Create a new election group</h1>
 
-<%= form_for @group, url:{action: "create"} do |f|%>
+<%= form_for @group, :url=> {:action => 'create'} do |f|%>
 	<fieldset>
 		<legend>Basic Info</legend>
-		<label><h2>Group Name</h2>
-			<%= f.text_field :name %>
+		<label><h2>Group Name</h2>s
+			<%= f.text_field (:name) %>
 		</label>
 		<label><h3>Secretary's (your) email address</h3>
 			<%= email_field_tag :admin_email %>
@@ -14,7 +14,7 @@
 	<fieldset>
 		<legend>Election Rules</legend>
 		<label>Daily Election
-			<%= check_box_tag :is_daily, "true", {:checked => 'checked'} %>
+			<%= f.check_box "[prefs]['is_daily']" %>
 		</label>
 		<br/>
 		<label>Polls Close
@@ -22,12 +22,12 @@
 		</label>
 		<br/>
 		<label>Enable Snap Election
-			<%= check_box "prefs[lightning]", 'true'||@group.pref(:lightning), {:checked => 'checked'} %>
+			<%= f.check_box "[prefs][lightning]" %>
 		</label>
 		<caption>Allows 10 minutes of voting after poll close if no member voted in time.</caption>
 		<br/>
 		<label>No Repeat Winners
-			<%= check_box "prefs[retire_for_week]", 'true', {:checked => 'checked'} %>
+			<%= f.check_box "[prefs][retire_for_week]"%>
 		</label>
 		<caption>Winners are ineligible for the remainder of the same week.</caption>
 		

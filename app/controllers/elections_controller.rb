@@ -18,12 +18,12 @@ class ElectionsController < ApplicationController
 
   #GET /elections/index
   def index
-    @groups = LunchGroup.order(:id)
+    @groups = Group.order(:id)
   end
 
   #GET /elections/1234
   def show
-    @group = LunchGroup.find_by_id params[:id]
+    @group = Group.find_by_id params[:id]
     respond_to do |format|
       format.html {render :show}
       format.json do
@@ -37,7 +37,7 @@ class ElectionsController < ApplicationController
   #GET /elections/new
   #form for creating a new voting group
   def new
-    @group = LunchGroup.new
+    @group = Group.new
     respond_to do |format|
       format.html {render :new}
       format.json{render :json=>{fuckyou:true} }
@@ -47,15 +47,12 @@ class ElectionsController < ApplicationController
   #POST /elections
   #actually creates a new voting group
   def create 
-    LunchGroup.transaction do
-      @group = LunchGroup.new
-      @group.assign_attributes(params[:group])
-      if success = @group.save
+    Group.transaction do
+      @group = Group.new(params[:group])
+     # @group.assign_attributes(params[:group])
+      if @group.save
         @admin_user = GroupMember.new(:email=>params[:admin_email])
         @group.add_admin @admin_user
-      end
- 
-      if success
         flash[:notice] = "New group was created!"
         respond_to do |format|
           format.html {redirect_to controller: :group_members}
@@ -75,13 +72,13 @@ class ElectionsController < ApplicationController
   ##GET /election/[group_id]
   #form for editing an existing election group
   def edit
-    @group = LunchGroup.find_by_id params[:id]
+    @group = Group.find_by_id params[:id]
   end
   
   #PUT /elections/[group_id]
   def update
     #updates group options
-    @group = LunchGroup.find_by_id(params[:id])
+    @group = Group.find_by_id(params[:id])
     #todo-extract this to a before_filter
     if !@group
       flash[:notice] = "Group not found!"
@@ -110,7 +107,7 @@ class ElectionsController < ApplicationController
   #DELETE /elections/[group_id]
   def destroy
     #removes a group
-      @group = LunchGroup.find_by_id(params[:id])
+      @group = Group.find_by_id(params[:id])
       if !@group
         flash[:notice] = "Group not found!"
         logger.debug "group not found for delete"
