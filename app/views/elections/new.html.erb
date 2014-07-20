@@ -3,7 +3,7 @@
 <%= form_for @group, :url=> {:action => 'create'} do |f|%>
 	<fieldset>
 		<legend>Basic Info</legend>
-		<label><h2>Group Name</h2>s
+		<label><h2>Group Name</h2>
 			<%= f.text_field (:name) %>
 		</label>
 		<label><h3>Secretary's (your) email address</h3>
@@ -14,7 +14,7 @@
 	<fieldset>
 		<legend>Election Rules</legend>
 		<label>Daily Election
-			<%= f.check_box "[prefs]['is_daily']" %>
+			<%= f.check_box :daily_election %>
 		</label>
 		<br/>
 		<label>Polls Close
@@ -22,12 +22,12 @@
 		</label>
 		<br/>
 		<label>Enable Snap Election
-			<%= f.check_box "[prefs][lightning]" %>
+			<%= f.check_box :lightning %>
 		</label>
 		<caption>Allows 10 minutes of voting after poll close if no member voted in time.</caption>
 		<br/>
 		<label>No Repeat Winners
-			<%= f.check_box "[prefs][retire_for_week]"%>
+			<%= f.check_box :retire_for_week%>
 		</label>
 		<caption>Winners are ineligible for the remainder of the same week.</caption>
 		

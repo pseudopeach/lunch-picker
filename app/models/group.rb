@@ -1,18 +1,19 @@
 class Group < ActiveRecord::Base
 
   self.table_name = "lunch_groups"
+  store :prefs_json, accessors: [:lightning, :retire_for_week, :daily_election]
 
   #prefs =======================
   #synchronize text field in DB with ruby hash object named @raw_prefs
 
   #creates new prefs hash on all new Group objects
-  after_initialize :set_defaults  
+  # after_initialize :set_defaults
 
   #deserializes db column prefs_json into @raw_prefs attribute
-  after_find :decode_prefs
+  # after_find :decode_prefs
 
   #serializes @raw_prefs attribute into db column prefs_json
-  before_save :encode_prefs
+  # before_save :encode_prefs
   # ============================
 
 
@@ -23,8 +24,9 @@ class Group < ActiveRecord::Base
   has_many :win_history, :class_name => "LunchHistory", :inverse_of => :group
   has_and_belongs_to_many :ballot_options
   
-  attr_accessible :name, :polls_close_utc, :prefs
+  attr_accessible :name, :polls_close_utc, :lightning, :retire_for_week, :daily_election
   
+=begin
   def set_defaults
     @raw_prefs = {
       lightning: true,
@@ -32,6 +34,7 @@ class Group < ActiveRecord::Base
       daily_election: true
     }
   end
+=end
   
   def self.poll_length
     4.hours
@@ -39,7 +42,7 @@ class Group < ActiveRecord::Base
   
   def polls_open?
     close = polls_close_at
-    if self.pref :lightning
+    if self.lightning
       first = first_vote_of_day_cast_at
       #closing time has past, but either no one has voted, or voting started less than 10 minutes ago
       return true if close.past? && (!first || (first+10.minutes).future?)
@@ -99,6 +102,7 @@ class Group < ActiveRecord::Base
     ballot_options
   end
   
+=begin
   def prefs=(input)
     input.each_pair do |k,v|
       if @raw_prefs.key? k
@@ -106,10 +110,13 @@ class Group < ActiveRecord::Base
       end
     end
   end
+=end
   
+=begin
   def pref(key)
     @raw_prefs[key]
   end
+=end
   
   def add_admin(admin)
     self.transaction do
@@ -130,11 +137,14 @@ class Group < ActiveRecord::Base
   end
 
   
+=begin
   def encode_prefs
     self.prefs_json = @raw_prefs.to_json
   end
+=end
 
   #trust what's in the DB, or set to default
+=begin
   def decode_prefs
     if self.prefs_json
       @raw_prefs = JSON.parse(self.prefs_json)
@@ -142,6 +152,7 @@ class Group < ActiveRecord::Base
       set_defaults
     end
   end
+=end
 
   #vote by tag i.e. "Mexican" or "Quick Meal"
   def is_tag_election?

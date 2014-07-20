@@ -4,7 +4,7 @@ class GroupMember < ActiveRecord::Base
 
   has_many :votes, :inverse_of => :group_member
   has_many :votes_today, :class_name => 'Vote'
-  belongs_to :group, :inverse_of => :group_member
+  belongs_to :group, :inverse_of => :members
   
   @@Choice_Limit = 3
   validates_presence_of :email
