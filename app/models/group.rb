@@ -1,8 +1,6 @@
 class Group < ActiveRecord::Base
 
   self.table_name = "lunch_groups"
-  self.table_name = "ballot_options_lunch_groups"
-  set_primary_key :lunch_group_id
 
   store :prefs_json, accessors: [:lightning, :retire_for_week, :daily_election]
 
@@ -25,7 +23,7 @@ class Group < ActiveRecord::Base
   has_many :votes, :through=>:members
   has_many :votes_today, :class_name=>"Vote", :through=>:members
   has_many :win_history, :class_name => "LunchHistory", :inverse_of => :group
-  has_and_belongs_to_many :ballot_options
+  has_and_belongs_to_many :ballot_options, :join_table => "ballot_options_lunch_groups", foreign_key: "lunch_group_id"
   
   attr_accessible :name, :polls_close_utc, :lightning, :retire_for_week, :daily_election
   
