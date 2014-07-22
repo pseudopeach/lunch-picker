@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130816200024) do
+ActiveRecord::Schema.define(:version => 20140721224739) do
 
   create_table "ballot_option_tags", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20130816200024) do
     t.integer "ballot_option_id", :null => false
     t.integer "lunch_group_id",   :null => false
   end
+
+  add_index "ballot_options_lunch_groups", ["ballot_option_id", "lunch_group_id"], :name => "index_ballot_options_lunch_groups"
 
   create_table "group_members", :force => true do |t|
     t.integer  "group_id"

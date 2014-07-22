@@ -1,6 +1,9 @@
 class Group < ActiveRecord::Base
 
   self.table_name = "lunch_groups"
+  self.table_name = "ballot_options_lunch_groups"
+  set_primary_key :lunch_group_id
+
   store :prefs_json, accessors: [:lightning, :retire_for_week, :daily_election]
 
   #prefs =======================
