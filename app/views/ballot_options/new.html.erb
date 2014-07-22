@@ -1,2 +1,7 @@
-<h1>BallotOptions#new</h1>
-<p>Find me in app/views/ballot_options/new.html.erb</p>
+<h1>Lunch Places</h1>
+<%= form_for @ballot_option, :url=> {action => 'create'} do |f|%>
+    <label><h2>Place Name</h2>
+      <% f.text_field :name %>
+    </label>
+    <%=submit_tag%>
+<%end%>

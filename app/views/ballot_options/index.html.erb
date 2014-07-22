@@ -1,2 +1,12 @@
-<h1>BallotOptions#index</h1>
-<p>Find me in app/views/ballot_options/index.html.erb</p>
+<h1>Lunch Places</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% @options.each do |option| %>
+      <tr>
+        <td><%= option.name %></td>
+      </tr>
+  <%end%>
+</table>
